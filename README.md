@@ -6,7 +6,7 @@ June 13, 2023  4h
 
 Congratulations!\
 This is the 22sh day for leetcode python study. Today we will learn more about backtracking!\
-The challenges today are about ~~need to delete later~~.
+The challenges today are about using backtracking as a kind of loop solution. For each loop, the number of possible choices of elements /size of one set defines the width of the tree, and the number of loops we need to have/k defines the depth of the tree, we use recursion to simplify the multiple loops. Don't forget the backtracking process followed!
 
 
 ## 216.Combination Sum III
@@ -41,6 +41,42 @@ class Solution:
 [leetcode](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)\
 Think first, then no idea :(\
 The number of digits determines the depth of the tree, and 3 letters for each number determines the width of tree.\
+The solutiion below is so cool and definitely worth reviewing again!
+```python
+class Solution:
+    def __init__(self):
+        self.letterMap = [
+            "",     #0
+            "",     #1
+            "abc",     #2
+            "def",     #3
+            "ghi",     #4
+            "jkl",     #5
+            "mno",     #6
+            "pqrs",     #7
+            "tuv",     #8
+            "wxyz"     #9
+        ]
+        self.result = []    #define a global variable to store all results
+        self.s = ""     #define a global variable to store each string
+
+    def backtracking(self, digits, index):
+        if index == len(digits):
+            self.result.append(self.s)
+            return
+        digit = int(digits[index])     #change number in digits from string input to real number
+        letters = self.letterMap[digit]     #get the corresbonding letters for this digit
+        for i in range(len(letters)):
+            self.s += letters[i]        #add the letter to result string
+            self.backtracking(digits, index+1)      #recursion, deal with the next number given in the digits
+            self.s = self.s[:-1]    #backtracking, delete the last item added to the result string
+
+    def letterCombinations(self, digits: str) -> List[str]:
+        if len(digits) == 0:
+            return self.result
+        self.backtracking(digits, 0)
+        return self.result
+```
 
 
 
